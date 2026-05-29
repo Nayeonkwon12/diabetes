@@ -1,0 +1,570 @@
+/* ============================================================
+   Diebates Dashboard — DARK theme matching Figma captures
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #0A0A0A; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; letter-spacing: inherit; }
+input  { font: inherit; color: inherit; }
+img    { display: block; max-width: 100%; }
+::selection { background: var(--lime); color: #1A1A1A; }
+
+body {
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-tight);
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ─── App shell ─────────────────────────────────────────────── */
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: #0A0A0A;
+}
+.main {
+  position: relative;
+  padding: 56px 56px 80px;
+  min-width: 0;
+}
+
+/* ─── Sidebar ───────────────────────────────────────────────── */
+.rail {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  background: #0A0A0A;
+  padding: 56px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rail__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.rail__nav--bottom {
+  margin-top: auto;
+}
+
+/* Nav button — captures show large 18px label + 24px icon,
+   left edge has subtle lime hint on active. */
+.navbtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.42);
+  transition: color var(--t-base) var(--ease-out),
+              background var(--t-base) var(--ease-out);
+  text-align: left;
+}
+.navbtn__label {
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+}
+.navbtn:hover {
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.03);
+}
+.navbtn.is-active {
+  color: var(--lime);
+  background: linear-gradient(90deg, rgba(204,255,23,0.18) 0%, rgba(204,255,23,0.06) 100%);
+}
+.navbtn.is-active::after {
+  content: "";
+  position: absolute;
+  right: 0; top: 10px; bottom: 10px; width: 3px;
+  border-radius: 3px;
+  background: var(--lime);
+  box-shadow: 0 0 12px rgba(204,255,23,0.6);
+}
+.navbtn.is-active .navbtn__label { font-weight: 700; }
+
+/* ─── Display heading utilities ─────────────────────────────── */
+.display-2 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tighter);
+  line-height: 1.2;
+  color: var(--lime);
+  margin: 0;
+}
+
+/* ============================================================
+   1) "한국인과 당뇨" view
+   ============================================================ */
+.kor {
+  position: relative;
+  isolation: isolate;
+}
+/* Faded medical hero plate behind the top half */
+.kor__topbg {
+  position: absolute;
+  top: -56px; left: -56px; right: -56px;
+  height: 320px;
+  background-image: url("assets/bg_image1.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  z-index: -1;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+
+.kor__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+}
+
+.kor__h {
+  color: var(--lime);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tighter);
+  margin: 0 0 14px;
+}
+.kor__h--mt { margin-top: 32px; }
+.kor__p {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0 0 20px;
+  max-width: 60ch;
+}
+
+/* Dark chart card */
+.card-dark {
+  background: #1A1A1A;
+  border: 1px solid rgba(204,255,23,0.10);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+.scatter-card {
+  border-color: rgba(204,255,23,0.25);
+  background: #161616;
+  padding: 22px 24px;
+}
+.scatter-card__hint {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 6px;
+}
+.scatter-svg { width: 100%; height: auto; display: block; }
+
+.mort-card { padding: 14px 14px 8px; }
+.mort-svg  { width: 100%; height: auto; display: block; }
+
+/* Numbered cards (1, 2 callouts) */
+.numcard-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+.numcard {
+  background: #1A1A1A;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.numcard__head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.numcard__num {
+  display: inline-grid; place-items: center;
+  width: 22px; height: 22px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  font-size: 12px; font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  font-feature-settings: "tnum";
+}
+.numcard__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+.numcard__title sup { color: var(--lime); font-size: 11px; }
+.numcard__body { flex: 1; }
+.numcard__text {
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.62);
+  margin: 0 0 10px;
+}
+.numcard__foot {
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  margin: 4px 0 12px;
+}
+
+/* Legend chips */
+.legend-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 6px 0 12px; font-size: 11px; color: rgba(255,255,255,0.6); }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.lg--gap { margin-left: 6px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+.dot--lime  { background: #CCFF17; }
+.dot--olive { background: #8FA047; }
+.dot--gray  { background: #BABABA; }
+.dot--gray2 { background: #666; }
+
+/* Pancreas card */
+.pancreas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+.pancreas__col { display: flex; flex-direction: column; align-items: center; }
+.pancreas-svg { width: 100%; height: auto; }
+.pancreas__cap {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+  font-weight: 500;
+}
+.pancreas__cap b { font-weight: 800; font-feature-settings: "tnum"; }
+.negative { color: #FF6B6B; }
+.positive { color: #B9E25A; }
+
+/* β-cell gauge */
+.gauge { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 6px; }
+.gauge-svg { width: 60%; max-width: 240px; height: auto; }
+.gauge__cap {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+}
+.gauge__cap b { font-size: 14px; font-feature-settings: "tnum"; font-weight: 800; }
+
+/* ============================================================
+   2) "당뇨 예방 지침" view
+   ============================================================ */
+.guide {
+  position: relative;
+  isolation: isolate;
+}
+/* Full-bleed faded food background at the top */
+.guide__topbg {
+  position: absolute;
+  top: -56px; left: -56px; right: -56px;
+  height: 480px;
+  background-image: url("assets/bg_image2.png");
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.18;
+  z-index: -1;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+
+.guide__head { max-width: 760px; margin-bottom: 28px; }
+.guide__title { color: var(--lime); margin-bottom: 12px; }
+.guide__sub {
+  color: rgba(255,255,255,0.62);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.guide__main {
+  display: grid;
+  grid-template-columns: minmax(560px, 1fr) 540px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── PLATE (left) ─────────────────────────────────────────── */
+.plate {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+}
+.plate__center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 84px; height: 84px;
+  background: #0A0A0A;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.4;
+  z-index: 2;
+}
+
+/* Slot */
+.slot {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border-radius: 14px;
+  overflow: hidden;
+  background: transparent;
+  transition: transform var(--t-base);
+}
+.slot:hover:not(.is-active) { transform: translateY(-2px); }
+
+.slot__card {
+  background: #0A0A0A;
+  position: relative;
+  height: 200px;
+  display: grid; place-items: center;
+  border-radius: 14px 14px 0 0;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 0;
+  transition: border-color var(--t-base);
+}
+.slot.is-active .slot__card {
+  border-color: rgba(255,255,255,0.16);
+}
+
+.slot__badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  transition: all var(--t-base);
+  z-index: 1;
+}
+
+.slot__art {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+}
+.slot__food {
+  width: 70%; height: 70%;
+  object-fit: contain;
+}
+
+.slot__q {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 1.5px dashed;
+  display: grid; place-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  transition: all var(--t-base);
+}
+
+.slot__banner {
+  padding: 13px 18px;
+  border-radius: 0 0 14px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  transition: all var(--t-base);
+}
+.slot__hint { letter-spacing: var(--tracking-tight); }
+.slot__pick {
+  display: flex; gap: 12px; align-items: baseline;
+  width: 100%; justify-content: space-between;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.slot__pname  { font-size: 14px; }
+.slot__pweight { font-size: 14px; font-feature-settings: "tnum"; opacity: 0.7; }
+
+/* ── STACKS (right) ───────────────────────────────────────── */
+.stacks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stack {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  background: #1A1A1A;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: opacity var(--t-base), background var(--t-base);
+}
+.stack.is-dim    { opacity: 0.55; }
+.stack.is-active { opacity: 1; background: #232323; }
+
+/* Vertical tab label */
+.stack__tab {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 12px 0;
+  gap: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  transition: all var(--t-base);
+}
+.stack__tab span { line-height: 1.05; }
+
+/* Food strip */
+.stack__strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 12px 12px;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.food-pick {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  padding: 8px 4px;
+  border-radius: 10px;
+  text-align: center;
+  transition: background var(--t-base), transform var(--t-base);
+  background: transparent;
+}
+.food-pick:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-2px);
+}
+.food-pick.is-picked {
+  background: rgba(204,255,23,0.10);
+  box-shadow: inset 0 0 0 1px rgba(204,255,23,0.4);
+}
+.stack.is-dim .food-pick { pointer-events: none; }
+.stack.is-dim .food-pick img { filter: grayscale(0.5) brightness(0.7); }
+
+.food-pick__img {
+  width: 64px; height: 56px;
+  display: grid; place-items: center;
+}
+.food-pick__img img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+}
+.food-pick__label {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1px;
+}
+.food-pick__name {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.2;
+}
+.food-pick__weight {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  font-feature-settings: "tnum";
+}
+.stack.is-dim .food-pick__name,
+.stack.is-dim .food-pick__weight { color: rgba(255,255,255,0.4); }
+
+/* ── LIFESTYLE section ────────────────────────────────────── */
+.lifestyle { margin-top: 56px; }
+.lifestyle__grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+}
+.lifestyle-card {
+  background: #1A1A1A;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+.lifestyle-card__head { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+.lifestyle-card__num {
+  display: inline-grid; place-items: center;
+  width: 22px; height: 22px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  font-size: 12px; font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  font-feature-settings: "tnum";
+}
+.lifestyle-card__title {
+  font-size: 16px; font-weight: 700;
+  margin: 0;
+}
+
+/* Exercise table */
+.extable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: rgba(255,255,255,0.78);
+}
+.extable th, .extable td {
+  padding: 11px 6px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.06);
+  font-weight: 500;
+  vertical-align: middle;
+}
+.extable thead th {
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.025);
+}
+.extable thead th:first-child,
+.extable tbody th { width: 70px; }
+.extable tbody th { text-align: center; color: rgba(255,255,255,0.55); font-weight: 600; background: rgba(255,255,255,0.025); }
+.extable__type td { font-weight: 700; }
+.extable__act td  { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+.tone-good { color: #CCFF17; }
+.tone-warn { color: #C39AE6; }
+.tone-info { color: #7DB0E0; }
+.tone-mute { color: rgba(255,255,255,0.45); }
+
+/* Daily habits 2x2 grid */
+.habits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+  margin-top: 4px;
+}
+.habit { display: flex; flex-direction: column; gap: 6px; }
+.habit__head { display: flex; align-items: center; gap: 8px; }
+.habit__title { font-size: 13px; font-weight: 700; }
+.habit__body {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  padding-left: 26px;
+}
+
+/* Placeholder for empty views */
+.placeholder {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 80px 0;
+  color: rgba(255,255,255,0.55);
+  max-width: 600px;
+}
+.placeholder .display-2 { color: var(--lime); }
+
+/* ─── Responsive guardrails ─── */
+@media (max-width: 1500px) {
+  .kor__grid { grid-template-columns: 1fr; }
+  .guide__main { grid-template-columns: 1fr; }
+  .stacks { max-width: 720px; }
+}
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .rail { position: relative; height: auto; flex-direction: row; flex-wrap: wrap; padding: 16px; }
+  .rail__nav, .rail__nav--bottom { flex-direction: row; flex-wrap: wrap; margin: 0; }
+  .main { padding: 24px 20px 60px; }
+  .numcard-row { grid-template-columns: 1fr; }
+  .plate { grid-template-columns: 1fr; }
+  .plate__center { display: none; }
+}

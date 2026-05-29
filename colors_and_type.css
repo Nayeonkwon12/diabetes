@@ -1,0 +1,231 @@
+/* ============================================================
+   Diebates — Colors & Type
+   Diabetes diet dashboard. Breaking the myth that diabetes = obesity.
+   ============================================================ */
+
+/* ---- Fonts ---- */
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 100;
+  src: url("fonts/Pretendard-Thin.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 200;
+  src: url("fonts/Pretendard-ExtraLight.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 300;
+  src: url("fonts/Pretendard-Light.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 400;
+  src: url("fonts/Pretendard-Regular.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  src: url("fonts/Pretendard-Medium.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 600;
+  src: url("fonts/Pretendard-SemiBold.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  src: url("fonts/Pretendard-Bold.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 800;
+  src: url("fonts/Pretendard-ExtraBold.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 900;
+  src: url("fonts/Pretendard-Black.woff") format("woff");
+  font-display: swap;
+}
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+
+:root {
+  /* ---- Brand / Accent ---- */
+  --lime: #CCFF17;            /* signature lime green */
+  --lime-soft: #E5FF7A;       /* lighter lime for fills */
+  --lime-25: rgba(204, 255, 23, 0.25);
+  --lime-10: rgba(204, 255, 23, 0.10);
+  --lime-glow: rgba(204, 255, 23, 0.45);
+
+  /* ---- Neutrals (light surface) ---- */
+  --bg: #FFFFFF;
+  --bg-soft: #FAFAFA;
+  --bg-tint: #F4F4F4;
+  --line: #EAEAEA;
+  --line-strong: #D8D8D8;
+
+  /* ---- Text ---- */
+  --fg1: #1A1A1A;             /* primary text */
+  --fg2: #4D4D4D;             /* secondary text */
+  --fg3: #9C9C9C;             /* tertiary / icon idle */
+  --fg-inverse: #FFFFFF;
+
+  /* ---- Dark surfaces (used in nav rail / hero overlays) ---- */
+  --dark-bg: #1A1A1A;
+  --dark-bg-2: #232323;
+  --dark-line: rgba(255, 255, 255, 0.08);   /* --white-8 from Figma */
+  --dark-fg1: #FFFFFF;
+  --dark-fg2: rgba(255, 255, 255, 0.72);
+  --dark-fg3: rgba(255, 255, 255, 0.45);
+
+  /* ---- Semantic ---- */
+  --good: #41C97A;            /* low GI / safe foods */
+  --warn: #FFB23E;            /* moderate GI */
+  --danger: #FF5A5F;          /* high GI / avoid */
+  --info: #4D8BFF;
+
+  /* ---- Radii ---- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* ---- Shadow ---- */
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  --shadow-lift: 0 4px 12px rgba(0,0,0,0.08), 0 18px 40px rgba(0,0,0,0.10);
+  --shadow-glow: 0 0 0 4px var(--lime-25), 0 8px 24px var(--lime-glow);
+  --shadow-inset: inset 0 0 0 1px var(--line);
+
+  /* ---- Spacing scale (4px base) ---- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+
+  /* ---- Type system ---- */
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+               "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+  --tracking-tight: -0.020em;       /* default per Figma */
+  --tracking-tighter: -0.030em;     /* display */
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 120ms;
+  --t-base: 200ms;
+  --t-slow: 360ms;
+}
+
+/* ============================================================
+   SEMANTIC TYPE
+   ============================================================ */
+
+html, body {
+  font-family: var(--font-sans);
+  color: var(--fg1);
+  background: var(--bg);
+  letter-spacing: var(--tracking-tight);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.display-1 {
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tighter);
+}
+.display-2 {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: var(--tracking-tighter);
+}
+.h1 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+}
+.h2 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: var(--tracking-tight);
+}
+.h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: var(--tracking-tight);
+}
+.h4 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: var(--tracking-tight);
+}
+.nav-label {       /* matches NaviBtn2 from Figma */
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: var(--tracking-tight);
+}
+.body-lg {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: var(--tracking-tight);
+}
+.body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: var(--tracking-tight);
+}
+.body-sm {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: var(--tracking-tight);
+}
+.caption {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
