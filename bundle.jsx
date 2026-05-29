@@ -113,7 +113,7 @@ function Icon({ name, size = 24, stroke = 2, className = "", style = {} }) {
 const NAV_ITEMS = [
   { id: "overview",   label: "개요",          icon: "dashboard" },
   { id: "koreans",    label: "한국인과 당뇨", icon: "search"    },
-  { id: "guidelines", label: "당뇨 예방 지침", icon: "food"      },
+  { id: "guidelines", label: "당뇨 예방 지침", icon: "food", customIcon: true },
 ];
 const NAV_BOTTOM = [
   { id: "settings",   label: "설정",      icon: "settings" },
@@ -137,7 +137,7 @@ function NavRail({ active, onChange }) {
   );
 }
 
-function NavBtn({ label, icon, active, onClick }) {
+function NavBtn({ label, icon, customIcon, active, onClick }) {
   return (
     <button
       type="button"
@@ -145,7 +145,9 @@ function NavBtn({ label, icon, active, onClick }) {
       onClick={onClick}
     >
       <span className="navbtn__icon">
-        <Icon name={icon} size={24} stroke={1.8}/>
+        {customIcon
+          ? <span className="navbtn__imgicon" aria-hidden="true"></span>
+          : <Icon name={icon} size={24} stroke={1.8}/>}
       </span>
       <span className="navbtn__label">{label}</span>
     </button>
@@ -788,9 +790,9 @@ function PlateSlot({ group, picked, active, onClick }) {
     >
       <div className="slot__card">
         {/* badge in top-left */}
-        <span className="slot__badge" style={{ background: active ? group.color : "transparent",
-                                                color: active ? "#0A0A0A" : "rgba(255,255,255,0.4)",
-                                                border: active ? "0" : "1px solid rgba(255,255,255,0.15)" }}>
+        <span className="slot__badge" style={{ background: (picked || active) ? group.color : "transparent",
+                                                color: (picked || active) ? "#0A0A0A" : "rgba(255,255,255,0.4)",
+                                                border: (picked || active) ? "0" : "1px solid rgba(255,255,255,0.15)" }}>
           {group.label}
         </span>
         {/* art area */}
@@ -808,8 +810,8 @@ function PlateSlot({ group, picked, active, onClick }) {
       </div>
       {/* color banner */}
       <div className="slot__banner" style={{
-        background: active ? group.color : "rgba(255,255,255,0.05)",
-        color: active ? "#1a1a1a" : "rgba(255,255,255,0.45)",
+        background: (picked || active) ? group.color : "rgba(255,255,255,0.05)",
+        color: (picked || active) ? "#1a1a1a" : "rgba(255,255,255,0.45)",
       }}>
         {picked ? (
           <span className="slot__pick">
