@@ -129,9 +129,27 @@ body {
 }
 
 .kor__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: stretch;
+}
+.kor__left, .kor__right {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  min-width: 0;
+}
+/* Left scatter card grows to match the right column's height */
+.kor__left .scatter-card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.kor__left .scatter-svg {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
 }
 
 .kor__h {
@@ -168,6 +186,7 @@ body {
   margin-bottom: 6px;
 }
 .scatter-svg { width: 100%; height: auto; display: block; }
+.scatter-card .scatter-svg { height: 100%; }
 
 .mort-card { padding: 14px 14px 8px; }
 .mort-svg  { width: 100%; height: auto; display: block; }
@@ -587,6 +606,10 @@ body {
 /* ─── Responsive guardrails ─── */
 @media (max-width: 1500px) {
   .guide__main { grid-template-columns: 1fr; }
+  .kor__grid { grid-template-columns: 1fr; }
+  .kor__left .scatter-card { flex: 0 0 auto; }
+  .kor__left .scatter-svg { flex: 0 0 auto; height: auto; }
+  .scatter-card .scatter-svg { height: auto; }
 }
 @media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }

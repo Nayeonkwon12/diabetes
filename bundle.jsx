@@ -1,6 +1,11 @@
 // Auto-bundle — all components in a single text/babel scope.
 // Source: icons.jsx, Nav.jsx, KoreansView.jsx, GuidelinesView.jsx, App.jsx
 
+// Cache-busting version — bump this whenever image assets are re-uploaded
+// so GitHub Pages / browsers fetch the fresh files instead of cached ones.
+const ASSET_VER = "3";
+const foodSrc = (img) => "assets/foods/" + img + "?v=" + ASSET_VER;
+
 
 // ─────────── icons.jsx ───────────
 // Diebates icon set — 2px stroke icons matching the Figma navigation glyphs.
@@ -755,7 +760,7 @@ function PlateSlot({ group, picked }) {
         {/* art area */}
         <div className="slot__art">
           {picked ? (
-            <img src={"assets/foods/" + picked.img} alt="" className="slot__food" />
+            <img src={foodSrc(picked.img)} alt="" className="slot__food" />
           ) : (
             <div className="slot__q" style={{
               borderColor: group.color,
@@ -804,7 +809,7 @@ function NutrientStack({ group, picked, onPick }) {
             onClick={() => onPick(group.id, f)}
           >
             <div className="food-pick__img">
-              <img src={"assets/foods/" + f.img} alt="" />
+              <img src={foodSrc(f.img)} alt="" />
             </div>
             <div className="food-pick__label">
               <span className="food-pick__name">{f.name}</span>
