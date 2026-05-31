@@ -121,7 +121,7 @@ body {
   height: 320px;
   background-image: url("assets/bg_image1.png");
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   opacity: 0.25;
   z-index: -1;
   mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
@@ -129,9 +129,9 @@ body {
 }
 
 .kor__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 }
 
 .kor__h {
@@ -147,12 +147,11 @@ body {
   font-size: 13px;
   line-height: 1.7;
   margin: 0 0 20px;
-  max-width: 60ch;
 }
 
 /* Dark chart card */
 .card-dark {
-  background: #1A1A1A;
+  background: #242422;
   border: 1px solid rgba(204,255,23,0.10);
   border-radius: 16px;
   padding: 24px;
@@ -160,7 +159,7 @@ body {
 }
 .scatter-card {
   border-color: rgba(204,255,23,0.25);
-  background: #161616;
+  background: #242422;
   padding: 22px 24px;
 }
 .scatter-card__hint {
@@ -181,7 +180,7 @@ body {
   margin-top: 14px;
 }
 .numcard {
-  background: #1A1A1A;
+  background: #242422;
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 14px;
   padding: 18px 20px 20px;
@@ -230,13 +229,22 @@ body {
 .dot--gray2 { background: #666; }
 
 /* Pancreas card */
-.pancreas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
-.pancreas__col { display: flex; flex-direction: column; align-items: center; }
-.pancreas-svg { width: 100%; height: auto; }
+.pancreas { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 8px; }
+.pancreas__figure { position: relative; width: 86%; max-width: 290px; }
+.pancreas__illu { width: 100%; height: auto; display: block; }
+.pancreas__label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 500;
+  color: #1a1a1a;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.pancreas__caps { display: flex; justify-content: space-around; align-items: flex-end; gap: 24px; width: 86%; max-width: 290px; }
 .pancreas__cap {
   font-size: 11px;
   color: rgba(255,255,255,0.7);
-  margin-top: 4px;
   font-weight: 500;
 }
 .pancreas__cap b { font-weight: 800; font-feature-settings: "tnum"; }
@@ -245,12 +253,22 @@ body {
 
 /* β-cell gauge */
 .gauge { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 6px; }
-.gauge-svg { width: 60%; max-width: 240px; height: auto; }
+.kflag { width: 100%; height: 100%; background: #fff; border-radius: 0 8px 8px 0; display: flex; align-items: center; justify-content: center; padding: 7px 10px; box-sizing: border-box; box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+.kflag img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.gauge__figure { position: relative; width: 60%; max-width: 240px; }
+.gauge-svg { width: 100%; height: auto; display: block; }
 .gauge__cap {
   text-align: center;
   font-size: 11px;
   color: rgba(255,255,255,0.7);
   line-height: 1.5;
+}
+.gauge__cap--inside {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.7);
 }
 .gauge__cap b { font-size: 14px; font-feature-settings: "tnum"; font-weight: 800; }
 
@@ -288,7 +306,7 @@ body {
   display: grid;
   grid-template-columns: minmax(560px, 1fr) 540px;
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* ── PLATE (left) ─────────────────────────────────────────── */
@@ -298,6 +316,7 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 16px;
+  align-self: stretch;
 }
 .plate__center {
   position: absolute;
@@ -331,12 +350,12 @@ body {
   background: transparent;
   transition: transform var(--t-base);
 }
-.slot:hover:not(.is-active) { transform: translateY(-2px); }
 
 .slot__card {
   background: #0A0A0A;
   position: relative;
-  height: 200px;
+  flex: 1 1 auto;
+  min-height: 200px;
   display: grid; place-items: center;
   border-radius: 14px 14px 0 0;
   border: 1px solid rgba(255,255,255,0.06);
@@ -403,18 +422,19 @@ body {
 .stacks {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
 }
 .stack {
   display: grid;
   grid-template-columns: 56px 1fr;
-  background: #1A1A1A;
+  background: #242422;
   border-radius: 14px;
   overflow: hidden;
   transition: opacity var(--t-base), background var(--t-base);
 }
 .stack.is-dim    { opacity: 1; }
-.stack.is-active { opacity: 1; background: #232323; }
+.stack.is-active { opacity: 1; background: #242422; }
 
 /* Vertical tab label */
 .stack__tab {
@@ -434,7 +454,8 @@ body {
   grid-template-columns: repeat(5, 1fr);
   padding: 12px 12px;
   gap: 8px;
-  align-items: stretch;
+  align-items: center;
+  align-content: center;
 }
 
 .food-pick {
@@ -445,10 +466,6 @@ body {
   text-align: center;
   transition: background var(--t-base), transform var(--t-base);
   background: transparent;
-}
-.food-pick:hover {
-  background: rgba(255,255,255,0.04);
-  transform: translateY(-2px);
 }
 .food-pick.is-picked {
   background: rgba(204,255,23,0.10);
@@ -492,7 +509,7 @@ body {
   margin-top: 20px;
 }
 .lifestyle-card {
-  background: #1A1A1A;
+  background: #242422;
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 14px;
   padding: 20px 22px;
@@ -569,9 +586,7 @@ body {
 
 /* ─── Responsive guardrails ─── */
 @media (max-width: 1500px) {
-  .kor__grid { grid-template-columns: 1fr; }
   .guide__main { grid-template-columns: 1fr; }
-  .stacks { max-width: 720px; }
 }
 @media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }

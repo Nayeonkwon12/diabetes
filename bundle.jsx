@@ -111,7 +111,6 @@ function Icon({ name, size = 24, stroke = 2, className = "", style = {} }) {
 // Bottom group: 설정 · 고객센터
 
 const NAV_ITEMS = [
-  { id: "overview",   label: "개요",          icon: "dashboard" },
   { id: "koreans",    label: "한국인과 당뇨", icon: "search"    },
   { id: "guidelines", label: "당뇨 예방 지침", icon: "food", customIcon: true },
 ];
@@ -125,11 +124,6 @@ function NavRail({ active, onChange }) {
     <aside className="rail">
       <nav className="rail__nav">
         {NAV_ITEMS.map(it => (
-          <NavBtn key={it.id} {...it} active={active === it.id} onClick={() => onChange(it.id)} />
-        ))}
-      </nav>
-      <nav className="rail__nav rail__nav--bottom">
-        {NAV_BOTTOM.map(it => (
           <NavBtn key={it.id} {...it} active={active === it.id} onClick={() => onChange(it.id)} />
         ))}
       </nav>
@@ -262,7 +256,7 @@ function OECDScatter() {
         </defs>
 
         {/* Korea glow */}
-        <ellipse cx={sx(4.3)} cy={sy(7)} rx="170" ry="150" fill="url(#kglow)"/>
+        <ellipse cx={sx(4.3)} cy={sy(7)} rx="128" ry="150" fill="url(#kglow)" opacity="0.5"/>
 
         {/* Grid */}
         {xTicks.map(t => (
@@ -286,6 +280,7 @@ function OECDScatter() {
 
         {/* Country squares */}
         {OECD_DATA.map(d => {
+          if (d.featured) return null;
           const isHover = hover && hover.code === d.code;
           const isFeat = d.featured;
           const fill = isFeat ? "#CCFF17"
@@ -310,16 +305,18 @@ function OECDScatter() {
           );
         })}
 
-        {/* Korea flag pin */}
-        <foreignObject x={sx(4.3) - 32} y={sy(7) - 60} width="64" height="44">
-          <KoreaFlag w={64} />
+        {/* Korea flag card — left-aligned to the 한국 square, with connector line */}
+        <line x1={sx(4.3) + 11} y1={sy(7) - 20} x2={sx(4.3) + 11} y2={sy(7) + 18}
+          stroke="#CCFF17" strokeWidth="2"/>
+        <foreignObject x={sx(4.3) + 10} y={sy(7) - 80} width="92" height="60">
+          <div className="kflag"><img src="assets/flag-kr.png" alt="대한민국 국기"/></div>
         </foreignObject>
 
         {/* Featured labels */}
-        <rect x={sx(4.3) + 10} y={sy(7) - 6} width="12" height="12" fill="#CCFF17"/>
-        <text x={sx(4.3) + 26} y={sy(7) + 4} fill="#CCFF17" fontSize="14" fontFamily="Pretendard" fontWeight="500">한국</text>
-        <rect x={sx(4.6) + 10} y={sy(6.2) - 6} width="12" height="12" fill="#CCFF17"/>
-        <text x={sx(4.6) + 26} y={sy(6.2) + 4} fill="#CCFF17" fontSize="14" fontFamily="Pretendard" fontWeight="500">일본</text>
+        <rect x={sx(4.3) + 10} y={sy(7) + 18} width="12" height="12" fill="#CCFF17"/>
+        <text x={sx(4.3) + 26} y={sy(7) + 28} fill="#CCFF17" fontSize="14" fontFamily="Pretendard" fontWeight="500">한국</text>
+        <rect x={sx(4.6) + 10} y={sy(6.2) + 18} width="12" height="12" fill="#CCFF17"/>
+        <text x={sx(4.6) + 26} y={sy(6.2) + 28} fill="#CCFF17" fontSize="14" fontFamily="Pretendard" fontWeight="500">일본</text>
 
         {/* Fixed OECD-avg callout — obesity (top) */}
         <FixedCallout x={sx(OECD_AVG.obesity) - 96} y={pad.t + 10}
@@ -375,11 +372,11 @@ function CountryHover({ d, x, y, chartW }) {
   const ty = Math.max(20, y - 60);
   return (
     <g transform={`translate(${tx} ${ty})`} style={{ pointerEvents: "none" }}>
-      <rect width={w} height="62" rx="8" fill="rgba(34,34,34,0.98)" stroke="#CCFF17"/>
-      <text x="14" y="22" fill="#CCFF17" fontSize="10" fontWeight="700"
+      <rect width={w} height="72" rx="8" fill="rgba(34,34,34,0.98)" stroke="#CCFF17"/>
+      <text x="14" y="26" fill="#CCFF17" fontSize="10" fontWeight="700"
         fontFamily="Pretendard" letterSpacing="0.1em">{d.code}</text>
-      <text x="14" y="40" fill="white" fontSize="15" fontWeight="700" fontFamily="Pretendard" letterSpacing="-0.02em">{d.name}</text>
-      <text x="14" y="55" fill="rgba(255,255,255,0.7)" fontSize="11" fontFamily="Pretendard"
+      <text x="14" y="44" fill="white" fontSize="15" fontWeight="700" fontFamily="Pretendard" letterSpacing="-0.02em">{d.name}</text>
+      <text x="14" y="59" fill="rgba(255,255,255,0.7)" fontSize="11" fontFamily="Pretendard"
         style={{ fontFeatureSettings: "'tnum'" }}>비만 {d.x}% · 당뇨 {d.y}%</text>
     </g>
   );
@@ -498,15 +495,15 @@ function MortHoverTooltip({ d, x, y, chartW }) {
   const w = 140;
   const flip = x + w + 14 > chartW;
   const tx = flip ? x - w - 12 : x + 12;
-  const ty = Math.max(8, y - 56);
+  const ty = Math.max(8, y - 62);
   return (
     <g transform={`translate(${tx} ${ty})`} style={{ pointerEvents: "none" }}>
-      <rect width={w} height="56" rx="6" fill="rgba(34,34,34,0.98)" stroke="#CCFF17"/>
-      <text x="12" y="18" fill="#CCFF17" fontSize="10" fontWeight="700"
+      <rect width={w} height="70" rx="6" fill="rgba(34,34,34,0.98)" stroke="#CCFF17"/>
+      <text x="12" y="22" fill="#CCFF17" fontSize="10" fontWeight="700"
         fontFamily="Pretendard" letterSpacing="0.08em">{d.year}</text>
-      <text x="12" y="34" fill="white" fontSize="13" fontWeight="700" fontFamily="Pretendard"
+      <text x="12" y="38" fill="white" fontSize="13" fontWeight="700" fontFamily="Pretendard"
         style={{ fontFeatureSettings: "'tnum'" }}>사망률 {d.mort}%</text>
-      <text x="12" y="50" fill="rgba(255,255,255,0.65)" fontSize="11" fontFamily="Pretendard"
+      <text x="12" y="54" fill="rgba(255,255,255,0.65)" fontSize="11" fontFamily="Pretendard"
         style={{ fontFeatureSettings: "'tnum'" }}>유병률 {d.prev}%</text>
     </g>
   );
@@ -545,36 +542,13 @@ function PancreasCard() {
         <span className="lg"><i className="dot dot--gray2"/> 백인</span>
       </div>
       <div className="pancreas">
-        {/* Left: pancreas size comparison */}
-        <div className="pancreas__col">
-          <svg viewBox="0 0 200 110" className="pancreas-svg">
-            {/* Korean (smaller, lime) */}
-            <path d="M 18 70 Q 32 50 60 50 Q 95 50 110 65 Q 122 78 130 78 L 130 88 Q 105 100 70 95 Q 32 90 18 78 Z"
-              fill="#CCFF17"/>
-            <text x="22" y="58" fill="#1A1A1A" fontSize="9" fontFamily="Pretendard" fontWeight="700">한국인</text>
-            {/* White (larger outline behind) */}
-            <path d="M 14 68 Q 28 38 70 38 Q 122 38 145 60 Q 168 78 180 78 L 180 92 Q 145 108 88 102 Q 30 100 14 84 Z"
-              fill="none" stroke="rgba(165,178,90,0.6)" strokeWidth="1.5" strokeDasharray="3 3"/>
-          </svg>
-          <div className="pancreas__cap">췌장 크기 <b className="negative">-12.3%</b></div>
+        <div className="pancreas__figure">
+          <img src="assets/pancreas-illu.svg" alt="인종에 따른 췌장 구조 차이" className="pancreas__illu"/>
+          <span className="pancreas__label" style={{ left: "24%", top: "calc(42% - 10px)" }}>한국인</span>
+          <span className="pancreas__label" style={{ left: "80%", top: "65%" }}>한국인</span>
         </div>
-        {/* Right: visceral fat comparison */}
-        <div className="pancreas__col">
-          <svg viewBox="0 0 160 110" className="pancreas-svg">
-            {/* Korean — more fat (bigger blobs) */}
-            <g opacity="0.65">
-              <ellipse cx="55" cy="55" rx="32" ry="26" fill="#888"/>
-              <ellipse cx="40" cy="68" rx="12" ry="10" fill="#666"/>
-              <ellipse cx="72" cy="40" rx="10" ry="8" fill="#666"/>
-              <ellipse cx="78" cy="70" rx="8" ry="6" fill="#666"/>
-            </g>
-            <text x="45" y="58" fill="white" fontSize="10" fontFamily="Pretendard" fontWeight="700">한국인</text>
-            {/* White — leaner */}
-            <g opacity="0.4">
-              <ellipse cx="125" cy="58" rx="22" ry="18" fill="#888"/>
-              <ellipse cx="118" cy="68" rx="6" ry="5" fill="#666"/>
-            </g>
-          </svg>
+        <div className="pancreas__caps">
+          <div className="pancreas__cap">췌장 크기 <b className="negative">-12.3%</b></div>
           <div className="pancreas__cap">췌장 내 지방 <b className="positive">+22.8%</b></div>
         </div>
       </div>
@@ -603,17 +577,12 @@ function BetaCellCard() {
         <span className="lg"><i className="dot dot--olive"/> 백인</span>
       </div>
       <div className="gauge">
-        <svg viewBox="0 0 240 130" className="gauge-svg">
-          {/* white baseline arc (full) */}
-          <path d="M 30 120 A 90 90 0 0 1 210 120"
-            fill="none" stroke="rgba(165,178,90,0.55)" strokeWidth="22" strokeLinecap="round"/>
-          {/* Korean arc — shorter, lime */}
-          <path d={describeArc(120, 120, 90, 180, 180 + 180 * pct)}
-            fill="none" stroke="#CCFF17" strokeWidth="22" strokeLinecap="round"/>
-        </svg>
-        <div className="gauge__cap">
-          백인 대비<br/>
-          β세포 기능 <b className="negative">-33.6%</b>
+        <div className="gauge__figure">
+          <img src="assets/betacell-illu.svg" alt="췌장 구조와 β세포 기능의 상관 관계" className="gauge-svg"/>
+          <div className="gauge__cap gauge__cap--inside">
+            백인 대비<br/>
+            β세포 기능 <b className="positive">-33.6%</b>
+          </div>
         </div>
       </div>
     </NumCard>
@@ -645,8 +614,8 @@ function KoreansView() {
           <h2 className="kor__h">당뇨 환자는 비만일까?</h2>
           <p className="kor__p">
             일반적으로 '비만 = 당뇨병 위험 증가'라는 공식이 통하지만, 한국과 일본은 이 공식에서 벗어난 예외적인 특성을 보입니다.<br/>
-            2023년 OECD 보고서 기준 평균과 비교해 보면, 한국의 비만율은 최저 수준이지만 당뇨병 유병률은 OECD 평균에 거의 근접해
-            있습니다. 이는 겉으로 보기엔 건강해 보여도, 실제로는 당뇨병 위험이 잠재되어 있을 수 있다는 점을 경고합니다.
+            2023년 OECD 보고서 기준 평균과 비교해 보면, 한국의 비만율은 최저 수준이지만 당뇨병 유병률은 OECD 평균에 거의 근접해 있습니다.<br/>
+            이는 겉으로 보기엔 건강해 보여도, 실제로는 당뇨병 위험이 잠재되어 있을 수 있다는 점을 경고합니다.
           </p>
           <OECDScatter />
         </div>
@@ -656,8 +625,7 @@ function KoreansView() {
           <h2 className="kor__h">시간차를 두고 찾아오는 당뇨병의 진짜 위험은?</h2>
           <p className="kor__p">
             아래 그래프는 2012년부터 2023년까지의 당뇨병 유병률과 당뇨병으로 인한 사망률의 변화를 나타낸 것입니다.<br/>
-            특히 유병률과 사망률 사이에 나타나는 시간차는, 당뇨병이 즉각적인 사망 원인이라기보다는 장기적으로 다양한
-            합병증을 유발하고, 이 합병증들이 추후 사망의 원인이 될 수 있음을 시사합니다.
+            특히 유병률과 사망률 사이에 나타나는 시간차는, 당뇨병이 즉각적인 사망 원인이라기보다는 장기적으로 다양한 합병증을 유발하고, 이 합병증들이 추후 사망의 원인이 될 수 있음을 시사합니다.
           </p>
           <MortalityChart />
 
@@ -701,15 +669,12 @@ function KoreansView() {
 // ============================================================
 
 function GuidelinesView() {
-  const [active, setActive] = React.useState("carb");
   const [picks, setPicks] = React.useState({
     carb: null, protein: null, fat: null, fiber: null,
   });
 
-  const group = NUTRIENT_GROUPS.find(g => g.id === active);
-
-  function pickFood(food) {
-    setPicks(p => ({ ...p, [active]: food }));
+  function pickFood(groupId, food) {
+    setPicks(p => ({ ...p, [groupId]: food }));
   }
 
   return (
@@ -736,8 +701,6 @@ function GuidelinesView() {
               key={g.id}
               group={g}
               picked={picks[g.id]}
-              active={active === g.id}
-              onClick={() => setActive(g.id)}
             />
           ))}
           <div className="plate__center">
@@ -751,9 +714,7 @@ function GuidelinesView() {
             <NutrientStack
               key={g.id}
               group={g}
-              active={active === g.id}
               picked={picks[g.id]}
-              onActivate={() => setActive(g.id)}
               onPick={pickFood}
             />
           ))}
@@ -780,19 +741,15 @@ function GuidelinesView() {
 // ============================================================
 // Left plate slot
 // ============================================================
-function PlateSlot({ group, picked, active, onClick }) {
+function PlateSlot({ group, picked }) {
   return (
-    <button
-      type="button"
-      className={"slot slot--" + group.id + (active ? " is-active" : "") + (picked ? " is-filled" : "")}
-      onClick={onClick}
+    <div
+      className={"slot slot--" + group.id + (picked ? " is-filled" : "")}
       style={{ "--gc": group.color, "--gcs": group.colorSoft }}
     >
       <div className="slot__card">
         {/* badge in top-left */}
-        <span className="slot__badge" style={{ background: (picked || active) ? group.color : "transparent",
-                                                color: (picked || active) ? "#0A0A0A" : "rgba(255,255,255,0.4)",
-                                                border: (picked || active) ? "0" : "1px solid rgba(255,255,255,0.15)" }}>
+        <span className="slot__badge" style={{ background: group.color, color: "#0A0A0A", border: 0 }}>
           {group.label}
         </span>
         {/* art area */}
@@ -801,18 +758,15 @@ function PlateSlot({ group, picked, active, onClick }) {
             <img src={"assets/foods/" + picked.img} alt="" className="slot__food" />
           ) : (
             <div className="slot__q" style={{
-              borderColor: active ? group.color : "rgba(255,255,255,0.18)",
-              color: active ? group.color : "rgba(255,255,255,0.3)",
-              background: active ? group.colorSoft : "transparent",
+              borderColor: group.color,
+              color: group.color,
+              background: group.colorSoft,
             }}>?</div>
           )}
         </div>
       </div>
       {/* color banner */}
-      <div className="slot__banner" style={{
-        background: (picked || active) ? group.color : "rgba(255,255,255,0.05)",
-        color: (picked || active) ? "#1a1a1a" : "rgba(255,255,255,0.45)",
-      }}>
+      <div className="slot__banner" style={{ background: group.color, color: "#1a1a1a" }}>
         {picked ? (
           <span className="slot__pick">
             <span className="slot__pname">{picked.name}</span>
@@ -822,26 +776,24 @@ function PlateSlot({ group, picked, active, onClick }) {
           <span className="slot__hint">{group.hint}</span>
         )}
       </div>
-    </button>
+    </div>
   );
 }
 
 // ============================================================
 // Right-side nutrient stack
 // ============================================================
-function NutrientStack({ group, active, picked, onActivate, onPick }) {
+function NutrientStack({ group, picked, onPick }) {
   return (
     <div
-      className={"stack" + (active ? " is-active" : " is-dim")}
-      onMouseEnter={onActivate}
+      className="stack"
       style={{ "--gc": group.color }}
     >
       {/* vertical color tab */}
-      <button type="button" className="stack__tab" onClick={onActivate}
-        style={{ background: active ? group.color : "rgba(255,255,255,0.04)",
-                 color: active ? "#1a1a1a" : "rgba(255,255,255,0.35)" }}>
+      <div className="stack__tab"
+        style={{ background: group.color, color: "#1a1a1a" }}>
         {group.label.split("").map((c, i) => <span key={i}>{c}</span>)}
-      </button>
+      </div>
       {/* food strip */}
       <div className="stack__strip">
         {group.foods.map(f => (
@@ -849,7 +801,7 @@ function NutrientStack({ group, active, picked, onActivate, onPick }) {
             key={f.id}
             type="button"
             className={"food-pick" + (picked && picked.id === f.id ? " is-picked" : "")}
-            onClick={() => { onActivate(); onPick(f); }}
+            onClick={() => onPick(group.id, f)}
           >
             <div className="food-pick__img">
               <img src={"assets/foods/" + f.img} alt="" />
