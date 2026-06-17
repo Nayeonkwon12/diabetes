@@ -132,11 +132,11 @@
   --tracking-tighter: -0.030em;     /* display */
 
   /* ---- Motion ---- */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --t-fast: 120ms;
-  --t-base: 200ms;
-  --t-slow: 360ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);    /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --t-fast: 120ms;   /* @kind other */
+  --t-base: 200ms;   /* @kind other */
+  --t-slow: 360ms;   /* @kind other */
 }
 
 /* ============================================================

@@ -69,7 +69,7 @@ body {
   font-weight: 600;
   font-size: 17px;
   letter-spacing: var(--tracking-tight);
-  line-height: 1;
+  line-height: 1.4;
 }
 /* custom raster glyph used as a mask so it inherits the nav color states */
 .navbtn__imgicon {
@@ -102,7 +102,7 @@ body {
   font-size: 32px;
   font-weight: 700;
   letter-spacing: var(--tracking-tighter);
-  line-height: 1.2;
+  line-height: 1.4;
   color: var(--lime);
   margin: 0;
 }
@@ -157,6 +157,7 @@ body {
   font-size: 26px;
   font-weight: 700;
   letter-spacing: var(--tracking-tighter);
+  line-height: 1.4;
   margin: 0 0 14px;
 }
 .kor__h--mt { margin-top: 32px; }
@@ -611,12 +612,41 @@ body {
   .kor__left .scatter-svg { flex: 0 0 auto; height: auto; }
   .scatter-card .scatter-svg { height: auto; }
 }
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   .app { grid-template-columns: 1fr; }
-  .rail { position: relative; height: auto; flex-direction: row; flex-wrap: wrap; padding: 16px; }
-  .rail__nav, .rail__nav--bottom { flex-direction: row; flex-wrap: wrap; margin: 0; }
+  .rail { position: relative; height: auto; flex-direction: row; flex-wrap: nowrap; padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .rail__nav, .rail__nav--bottom { flex-direction: row; flex-wrap: nowrap; margin: 0; flex: 1; gap: 8px; }
+  /* Nav buttons fill the available width on mobile */
+  .navbtn { flex: 1; justify-content: flex-start; }
   .main { padding: 24px 20px 60px; }
+  /* Mobile hero: full-bleed from just below the nav, no side/top padding */
+  .kor__topbg, .guide__topbg { top: -24px; left: -20px; right: -20px; }
   .numcard-row { grid-template-columns: 1fr; }
-  .plate { grid-template-columns: 1fr; }
-  .plate__center { display: none; }
+
+  /* Guide header: keep the oversized display title from overflowing */
+  .guide__title { font-size: 30px; line-height: 1.4; }
+
+  /* Keep the 2×2 plate on mobile — equal-size cells like desktop */
+  .plate { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .plate__center { display: flex; width: 76px; height: 76px; font-size: 9px; top: calc(50% - 18px); }
+  .slot__card { min-height: 138px; }
+  .slot__food { width: 84px; height: 84px; }
+  .slot__q { width: 48px; height: 48px; font-size: 18px; }
+  .slot__badge { font-size: 10px; padding: 4px 10px; top: 10px; left: 10px; }
+  /* Allow the hint to wrap to two lines; keep the 13px top/bottom padding */
+  .slot__banner { padding: 13px 12px; }
+  .slot__hint { font-size: 11px; line-height: 1.35; }
+  .slot__pick { gap: 12px; }
+  .slot__pname, .slot__pweight { font-size: 12px; }
+
+  /* Stack the lifestyle routine cards vertically (1×2) on mobile */
+  .lifestyle__grid { grid-template-columns: 1fr; }
+
+  /* Nutrient strips: keep the 1×5 row, shrink the tab so cells match the plate */
+  .stack { grid-template-columns: 40px 1fr; }
+  .stack__tab { font-size: 11px; padding: 10px 0; }
+  .stack__strip { padding: 12px 8px; gap: 5px; }
+  .food-pick { padding: 6px 2px; }
+  .food-pick__img { height: 56px; }
+  .food-pick__img img { max-width: 56px; max-height: 56px; }
 }
