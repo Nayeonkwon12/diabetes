@@ -627,7 +627,7 @@ body {
   .guide__title { font-size: 30px; line-height: 1.4; }
 
   /* Keep the 2×2 plate on mobile — equal-size cells like desktop */
-  .plate { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; }
+  .plate { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: 1fr 1fr; gap: 12px; }
   .plate__center { display: flex; width: 76px; height: 76px; font-size: 9px; top: calc(50% - 18px); }
   .slot__card { min-height: 138px; }
   .slot__food { width: 84px; height: 84px; }
@@ -643,9 +643,9 @@ body {
   .lifestyle__grid { grid-template-columns: 1fr; }
 
   /* Nutrient strips: keep the 1×5 row, shrink the tab so cells match the plate */
-  .stack { grid-template-columns: 40px 1fr; }
+  .stack { grid-template-columns: 40px minmax(0, 1fr); }
   .stack__tab { font-size: 11px; padding: 10px 0; }
-  .stack__strip { padding: 12px 8px; gap: 5px; }
+  .stack__strip { grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 12px 8px; gap: 5px; }
   .food-pick { padding: 6px 2px; }
   .food-pick__img { height: 56px; }
   .food-pick__img img { max-width: 56px; max-height: 56px; }
